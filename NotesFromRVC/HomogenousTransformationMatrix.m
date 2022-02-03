@@ -37,3 +37,13 @@ P = [3; 2];
 
 % Now we add this column vector P to our plot
 plot_point(P, 'label', 'P', 'solid', 'ko');
+
+% Describing the point p at coordinate frame {1}
+% see EquationNotes or equation 2.1 in RVC
+
+% P1 = inv(T1) * [P; 1];
+
+% e2h converts euclidean coordinates to homogenous 
+% (i.e of the same kind) and h2e performs the inverse
+% conversion
+P1 = h2e(inv(T1) * e2h(P));
