@@ -13,6 +13,7 @@ PROC Main()
         MoveJ Up1,v200,fine,Servo\WObj:=FrameForSwabBox;
         MoveJ OutsideNose,v200,fine,Servo\WObj:=NoseFame;
         MoveJ InNose,v200,fine,Servo\WObj:=NoseFame;
+        MoveJ Scrape,v200,fine,Servo\WObj:=NoseFame;
         MoveJ OutsideNose,v200,fine,Servo\WObj:=NoseFame;
         MoveJ SwabAbovePipe,v200,fine,Servo\WObj:=MixingFrame;
         MoveJ SwabInPipe,v200,fine,Servo\WObj:=MixingFrame;
@@ -30,6 +31,7 @@ PROC Main()
         MoveJ Up2,v200,fine,Servo\WObj:=FrameForSwabBox;
         MoveJ OutsideNose,v200,fine,Servo\WObj:=NoseFame;
         MoveJ InNose,v200,fine,Servo\WObj:=NoseFame;
+        MoveJ Scrape,v200,fine,Servo\WObj:=NoseFame;
         MoveJ OutsideNose,v200,fine,Servo\WObj:=NoseFame;
         MoveJ SwabAbovePipe,v200,fine,Servo\WObj:=MixingFrame;
         MoveJ SwabInPipe,v200,fine,Servo\WObj:=MixingFrame;
@@ -47,6 +49,7 @@ PROC Main()
         MoveJ Up3,v200,fine,Servo\WObj:=FrameForSwabBox;
         MoveJ OutsideNose,v200,fine,Servo\WObj:=NoseFame;
         MoveJ InNose,v200,fine,Servo\WObj:=NoseFame;
+        MoveJ Scrape,v200,fine,Servo\WObj:=NoseFame;
         MoveJ OutsideNose,v200,fine,Servo\WObj:=NoseFame;
         MoveJ SwabAbovePipe,v200,fine,Servo\WObj:=MixingFrame;
         MoveJ SwabInPipe,v200,fine,Servo\WObj:=MixingFrame;
