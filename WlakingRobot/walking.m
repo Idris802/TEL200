@@ -1,10 +1,9 @@
-function walking(varargin)
+function walking(travel_in_cm)
 
-    Tz = [-1 0 0 0; 0 -1 0 0; 0 0 1 0; 0 0 0 1];
     opt.niterations = 500;
-    opt.movie = 'video.mp4';
+    opt.movie = [];
     
-    opt = tb_optparse(opt, varargin);
+    opt = tb_optparse(opt);
     
 L1 = 0.1; L2 = 0.1;
 
@@ -89,7 +88,7 @@ plotopt = {'noraise', 'nobase', 'noshadow', 'nowrist', 'nojaxes', 'delay', 0};
 k = 1;
 A = Animate(opt.movie);
 
-xdir = linspace(0, 1, 400);
+xdir = linspace(0, travel_in_cm, 400);
 
 for i=1:length(xdir)
     
@@ -105,8 +104,8 @@ for i=1:length(xdir)
 
     legs(1) = SerialLink(leg, 'name', 'leg1', 'base', transl(xdir(i), 0, 0));
     legs(2) = SerialLink(leg, 'name', 'leg2', 'base', transl(-L+xdir(i), 0, 0));
-    legs(3) = SerialLink(leg, 'name', 'leg3', 'base', transl(-L+xdir(i), -W, 0)*Tz);
-    legs(4) = SerialLink(leg, 'name', 'leg4', 'base', transl(xdir(i), -W, 0)*Tz);
+    legs(3) = SerialLink(leg, 'name', 'leg3', 'base', transl(-L+xdir(i), -W, 0)*trotz(pi));
+    legs(4) = SerialLink(leg, 'name', 'leg4', 'base', transl(xdir(i), -W, 0)*trotz(pi));
     
     % instantiate each robot in the axes
     for j=1:4
