@@ -1,10 +1,9 @@
-function Rotation(varargin)
+function Rotation(degrees)
 
-    Tz = [-1 0 0 0; 0 -1 0 0; 0 0 1 0; 0 0 0 1];
     opt.niterations = 500;
-    opt.movie = 'rot.mp4';
+    opt.movie = [];
     
-    opt = tb_optparse(opt, varargin);
+    opt = tb_optparse(opt);
     
 L1 = 0.1; L2 = 0.1;
 
@@ -89,7 +88,7 @@ plotopt = {'noraise', 'nobase', 'noshadow', 'nowrist', 'nojaxes', 'delay', 0};
 k = 1;
 A = Animate(opt.movie);
 
-rot = linspace(0, pi/2, 400);
+rot = linspace(0, degrees, 400);
 % current_xy = (0.05, 0.01);
 
 for i=1:length(rot)
@@ -97,12 +96,12 @@ for i=1:length(rot)
     % draw the robot's body
     % create a fixed size axis for the robot, and set z positive downward
     figure(2)
-    clf; axis([-0.3 0.1 -0.2 0.2 -0.15 0.05]); set(gca,'Zdir', 'reverse')
+    clf; axis([-0.3 0.6 -0.2 0.2 -0.15 0.05]); set(gca,'Zdir', 'reverse')
     hold on
     
     leg_1 = [0, 0];
-    leg_2 = [-L*cos(rot(i)) -L*sin(rot(i))];
-    leg_4 = [W*sin(rot(i)) -W*cos(rot(i))];
+    leg_2 = [-L*cosd(rot(i)) -L*sind(rot(i))];
+    leg_4 = [W*sind(rot(i)) -W*cosd(rot(i))];
     leg_3 = [leg_2(1)+leg_4(1) leg_2(2)+leg_4(2)];
         
     
@@ -112,9 +111,9 @@ for i=1:length(rot)
 
     legs(1) = SerialLink(leg, 'name', 'leg1', 'base', transl(leg_1(1), leg_1(2), 0)*trotz(rot(i)));
     legs(2) = SerialLink(leg, 'name', 'leg2', 'base', transl(leg_2(1), leg_2(2), 0)*trotz(rot(i)));
-    legs(3) = SerialLink(leg, 'name', 'leg3', 'base', transl(leg_3(1), leg_3(2), 0)*trotz(rot(i)+Tz));
-    legs(4) = SerialLink(leg, 'name', 'leg4', 'base', transl(leg_4(1), leg_4(2), 0)*trotz(rot(i)+Tz));
-    
+    legs(3) = SerialLink(leg, 'name', 'leg3', 'base', transl(leg_3(1), leg_3(2), 0)*trotz(rot(i))*trotz(pi));
+    legs(4) = SerialLink(leg, 'name', 'leg4', 'base', transl(leg_4(1), leg_4(2), 0)*trotz(rot(i))*trotz(pi));
+ 
     % instantiate each robot in the axes
     for j=1:4
         legs(j).plot(qcycle(1,:), plotopt{:});
@@ -130,5 +129,5 @@ for i=1:length(rot)
     k = k+1;
     A.add();
 end
-
+hold on
 end
