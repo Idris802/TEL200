@@ -37,7 +37,6 @@ function path = trajectory(x, phi, iterations)
         path((emx-(iterations*2)+1):(emx-(iterations)), 2) = path((emx-(iterations*2)+1):(emx-(iterations)), 2) + dy_dt.';
         path((emx-(iterations-1)):(emx), 3) = path((emx-(iterations-1)):(emx), 3) + rt.';
        
-
     end
    
     dx_dt_vals = [];
