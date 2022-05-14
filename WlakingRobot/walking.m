@@ -1,5 +1,6 @@
-function walking(travel_in_cm)
+function walking(move_forward, phi)
 
+    Tz = [-1 0 0 0; 0 -1 0 0; 0 0 1 0; 0 0 0 1];
     opt.niterations = 500;
     opt.movie = [];
     
@@ -83,29 +84,40 @@ plotopt = {'noraise', 'nobase', 'noshadow', 'nowrist', 'nojaxes', 'delay', 0};
 % on the body of the walking robot.
 
 
-
 % walk!
 k = 1;
 A = Animate(opt.movie);
 
-xdir = linspace(0, travel_in_cm, 400);
+path = trajectory(move_forward, phi, 400);
 
-for i=1:length(xdir)
-    
+
+for i=1:size(path,1)
+
+    x = path(i, 1);
+    y = path(i, 2);
+    angle = path(i, 3);
+
     % draw the robot's body
     % create a fixed size axis for the robot, and set z positive downward
     figure(2)
-    clf; axis([-0.3+xdir(i) 0.1+xdir(i) -0.2 0.2 -0.15 0.05]); set(gca,'Zdir', 'reverse')
+    clf; axis([-0.3+x 0.3+x -0.2+y 0.2+y -0.15 0.05]); set(gca,'Zdir', 'reverse')
     hold on
     
-    patch([xdir(i) -L+xdir(i) -L+xdir(i) xdir(i)], [0 0 -W -W], [0 0 0 0], ...
+    % Updating x and y coordinates of the legs about the z-axis of leg(1)
+    leg_1 = [0, 0];
+    leg_2 = [-L*cos(angle) -L*sin(angle)];
+    leg_4 = [W*sin(angle) -W*cos(angle)];
+    leg_3 = [leg_2(1)+leg_4(1) leg_2(2)+leg_4(2)];
+        
+    % Moving the base according to the legs positioning
+    patch([leg_1(1)+x leg_2(1)+x leg_3(1)+x leg_4(1)+x], [leg_1(2)+y leg_2(2)+y leg_3(2)+y leg_4(2)+y], [0 0 0 0], ...
     'FaceColor', 'r', 'FaceAlpha', 0.5)
     
 
-    legs(1) = SerialLink(leg, 'name', 'leg1', 'base', transl(xdir(i), 0, 0));
-    legs(2) = SerialLink(leg, 'name', 'leg2', 'base', transl(-L+xdir(i), 0, 0));
-    legs(3) = SerialLink(leg, 'name', 'leg3', 'base', transl(-L+xdir(i), -W, 0)*trotz(pi));
-    legs(4) = SerialLink(leg, 'name', 'leg4', 'base', transl(xdir(i), -W, 0)*trotz(pi));
+    legs(1) = SerialLink(leg, 'name', 'leg1', 'base', transl(leg_1(1)+x, leg_1(2)+y, 0)*trotz(angle));
+    legs(2) = SerialLink(leg, 'name', 'leg2', 'base', transl(leg_2(1)+x, leg_2(2)+y, 0)*trotz(angle));
+    legs(3) = SerialLink(leg, 'name', 'leg3', 'base', transl(leg_3(1)+x, leg_3(2)+y, 0)*trotz(angle)*Tz);
+    legs(4) = SerialLink(leg, 'name', 'leg4', 'base', transl(leg_4(1)+x, leg_4(2)+y, 0)*trotz(angle)*Tz);
     
     % instantiate each robot in the axes
     for j=1:4
@@ -124,3 +136,9 @@ for i=1:length(xdir)
 end
 
 end
+
+% huske de siste posisjonen 
+% huske vinkelen
+
+
+% du kan bruke input argumentene for å plott roboten på den animasjonen
