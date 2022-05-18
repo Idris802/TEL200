@@ -1,4 +1,4 @@
-function walking(move_forward, interval)
+function walking(plan)
 
     Tz = [-1 0 0 0; 0 -1 0 0; 0 0 1 0; 0 0 0 1];
     opt.niterations = 500;
@@ -88,7 +88,7 @@ plotopt = {'noraise', 'nobase', 'noshadow', 'nowrist', 'nojaxes', 'delay', 0};
 k = 1;
 A = Animate(opt.movie);
 
-path = compoundmatrix(move_forward, interval);
+path = plan;
 
 
 for i=1:size(path,1)
@@ -102,6 +102,10 @@ for i=1:size(path,1)
     figure(2)
     clf; axis([-0.3+x 0.3+x -0.2+y 0.2+y -0.15 0.05]); set(gca,'Zdir', 'reverse')
     hold on
+    
+    % Plotting the path that the robot should follow.
+    v0 = zeros(length(path), 1);
+    plot3(path(:,1),path(:,2),v0(:),'r')
 
     % Translating point edges of body to center
     tempx1 = 0.1;
@@ -116,7 +120,7 @@ for i=1:size(path,1)
     tempx4 = 0.1;
     tempy4 = -0.05;
 
-    % Applying rotations for each edge
+    % Applying rotations for each edge 
     xy1 = [(tempx1*cos(angle)-tempy1*sin(angle)) (tempx1*sin(angle)+tempy1*cos(angle))];
     xy2 = [(tempx2*cos(angle)-tempy2*sin(angle)) (tempx2*sin(angle)+tempy2*cos(angle))];
     xy3 = [(tempx3*cos(angle)-tempy3*sin(angle)) (tempx3*sin(angle)+tempy3*cos(angle))];
