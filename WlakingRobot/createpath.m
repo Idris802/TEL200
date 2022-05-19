@@ -1,16 +1,13 @@
-% This function trajectory creates a path for the walking robot created in walking.m
+function path = createpath(x, phi, iterations)
+% CREATEPATH creates a path for the walking robot
 
-% The trajectory function returns a compounded marix and hence that its
-% name that is given should be changed to something related to matrix.
+% The functions input arguments are: x a list containing the steps for the 
+% robot to take (NB: the robot only walks forward). phi is a list containing
+% angles in radians which the robots legs and body should rotate accordingly 
+% to.
 
-% The function has two input arguments one is a list of the forward travel
-% destinations that the robot is suposed to travel to and the other are agnles
-% in radians which the robots legs and body shopuld rotate accordingly to.
-% iterations is also named wrong here as it is the intervals not
-% iterations.
-
-
-function path = trajectory(x, phi, iterations)
+% The trajectory function returns a compunded matrix containing the x, y 
+% phi values in intervals based on the value of iterations.
     
     path = zeros(0);
     y = zeros(length(x), 1);
@@ -59,9 +56,9 @@ function path = trajectory(x, phi, iterations)
 
      for i=1:length(dx_dt_vals)
 
-         fill_x = ones(sp(1)-n, 1)*dx_dt_vals(i);
-         fill_y = ones(sp(1)-n, 1)*dy_dt_vals(i);
-         fill_phi = ones(sp(1)-b, 1)*phi(i+1);
+         fill_x = zeros(sp(1)-n, 1)+dx_dt_vals(i);
+         fill_y = zeros(sp(1)-n, 1)+dy_dt_vals(i);
+         fill_phi = zeros(sp(1)-b, 1)+phi(i+1);
 
          path(k:end, 1) = path(k:end, 1) + fill_x;
          path(k:end, 2) = path(k:end, 2) + fill_y;
