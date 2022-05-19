@@ -1,4 +1,9 @@
-function path = compoundmatrix(plan, interval)
+function path = prmpath(plan, interval)
+%PRMPATH this function is spesifically made for accepting the waypoints
+% created by PRBROADMAP from random start to goal positions and generates a 
+% a matrix containing x, y positions and angle phi which the robot
+% should follow. Input arguments are way-points generated PRBROADMAP and 
+% interval.
 
     via_x = plan(:,1).';
     via_y = plan(:,2).';
@@ -13,7 +18,6 @@ function path = compoundmatrix(plan, interval)
     % finds the orientation of each vector 
     phi = atan2(py, px);
     phi_d = [phi(1), diff(phi)];
-
 
     path = zeros(interval*(length(via_x)-1)*2, 3);
     path(:, 1) = start_x; 
@@ -48,6 +52,4 @@ function path = compoundmatrix(plan, interval)
         c = c+interval*2;
 
     end
-
-
 end
