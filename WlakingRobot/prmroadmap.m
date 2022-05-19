@@ -1,4 +1,4 @@
-function plan = prbroadmap(n, points_n)
+function plan = prmroadmap(n, points_n)
 %PRBROADMAP generates a map and way-points from ranmdom start to goal points 
 % for our walking robot. 
     
