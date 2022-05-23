@@ -33,7 +33,13 @@ function plan = prm_planner(n, points_n)
             catch MyErr 
                % Tries to generate a path one more time with 500
                increasedpoints = increasedpoints + 1;
+               
+                 if ps(1) > 2
+                   k = k+1;
+                   prm.plot;
+                   drawnow
 
+               end
             end
 
 
