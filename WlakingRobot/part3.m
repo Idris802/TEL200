@@ -21,6 +21,10 @@ prm = PRM(MyKillianMap);
 prm.plan('npoints', np)
 prm.plot
 
-
-
-
+%% Extracting pose and plotting it as a function of time
+M = pg.graph.vertexlist; % The model data 
+pg1 = pg.scanxy(3873); 
+pg2 = pg.scanxy(1);
+T_initial = icp(pg1, pg2, 'verbose' , 'T0', transl2(0.5, 0), 'distthresh', 3) % An initial pose
+D = double(T_initial) * M; % Some noisy observed data
+[T,d] = icp(M, D, 'plot', 3);
